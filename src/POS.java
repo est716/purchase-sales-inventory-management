@@ -13,7 +13,7 @@ import View.HomePage;
 public class POS {
     public static void main(String[] args) throws Exception {
         // HomePage homePage = new HomePage();
-        // homePage.setSize(800, 800);
+        // homePage.setSize(800, 800);s
         // homePage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // homePage.setLocationRelativeTo(null);
         // homePage.setVisible(true);
