@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 import Model.Data;
 import Model.ShipmentData;
 import View.ShipmentPanel;
@@ -24,12 +27,16 @@ public class ShipmentHandler extends Handler {
         if (this.shipmentData != null && this.shipmentPanel != null) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 String barcodeString = shipmentPanel.getShipmentInput().getText();
-                shipmentData.insertData(barcodeString);
+                boolean isExist = shipmentData.insertData(barcodeString);
                 shipmentPanel.getShipmentInput().setText("");
-                shipmentPanel.setShipmentLabelCountingSum(
+                if (isExist) {
+                    shipmentPanel.setShipmentLabelCountingSum(
                     shipmentData.getTotalPrice()
-                );
-                shipmentPanel.updateUI();
+                    );
+                    shipmentPanel.updateUI();
+                }else{
+                    JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在", "警告", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
@@ -42,6 +49,11 @@ public class ShipmentHandler extends Handler {
     public void actionPerformed(ActionEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null
                 && this.shipmentPanel.getShipmentButton() == e.getSource()) {
+                DefaultTableModel dfm = shipmentData.getData();
+                for(int i = 0; i < dfm.getRowCount(); i++){
+                    dfm.getValueAt(i, 0);
+                    dfm.getValueAt(i, 3);
+                }
         }
     }
 

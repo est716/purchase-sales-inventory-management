@@ -21,12 +21,17 @@ public class ShipmentData extends Data {
      * 
      * @param barcode is String
      */
-    public void insertData(String barcode) {
+    public boolean insertData(String barcode) {
         if (!isExistBarcodeNum(barcode)) {
             Vector<String> row = InventoryData.queryOnceData(barcode);
-            row.setElementAt("1", 3);
-            this.data.addRow(row);
+            if (!row.isEmpty()) {
+                row.setElementAt("1", 3);
+                this.data.addRow(row);
+            }else{
+                return false;
+            }
         }
+        return true;
     }
 
     public String getTotalPrice(){

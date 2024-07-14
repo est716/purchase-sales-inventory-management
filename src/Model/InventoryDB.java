@@ -73,7 +73,7 @@ public class InventoryDB {
         try {
             ResultSet rs = this.statement.executeQuery(querySyn);
             if (!rs.next())
-                return null;
+                return queryData;
             queryData.add(rs.getString("id"));
             queryData.add(rs.getString("name"));
             queryData.add(rs.getString("price"));
