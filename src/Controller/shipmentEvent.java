@@ -1,12 +1,15 @@
 package Controller;
 
-public class shipmentEvent {
+import java.util.EventObject;
+
+public class shipmentEvent extends EventObject {
 
     public String id;
 
     public String num;
 
-    public shipmentEvent(){
+    public shipmentEvent(Object source){
+        super(source);
     }
     
 }
