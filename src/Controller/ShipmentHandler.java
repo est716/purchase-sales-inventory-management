@@ -45,6 +45,8 @@ public class ShipmentHandler extends Handler {
     public void keyReleased(KeyEvent e) {
     }
 
+
+    //當售出按鈕被觸發時，將會進行資料更新
     @Override
     public void actionPerformed(ActionEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null
