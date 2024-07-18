@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Data;
+import Model.InventoryData;
 import Model.ShipmentData;
 import View.ShipmentPanel;
 import View.ViewPanel;
@@ -53,9 +54,12 @@ public class ShipmentHandler extends Handler {
                 && this.shipmentPanel.getShipmentButton() == e.getSource()) {
                 DefaultTableModel dfm = shipmentData.getData();
                 for(int i = 0; i < dfm.getRowCount(); i++){
-                    dfm.getValueAt(i, 0);
-                    dfm.getValueAt(i, 3);
+                    String id = (String) dfm.getValueAt(i, 0);
+                    String num = (String) dfm.getValueAt(i, 3);
+                    //triggerEvent
+                    InventoryData.updateNewData(id, num);
                 }
+                shipmentData.clearData();
         }
     }
 

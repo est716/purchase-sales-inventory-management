@@ -35,6 +35,21 @@ public class InventoryDB {
 
     }
 
+    // This method can only update the quantity of the product
+    public void updateDataNum(String id, String num){
+        Vector<String> oldData = queryOnceData(id);
+        String oldNumString = oldData.get(3);
+        int oldNum = Integer.valueOf(oldNumString);
+        int newNum = Integer.valueOf(num);
+        String updateSyn = "UPDATE INVENTORY SET num = '" + String.valueOf(oldNum - newNum) + "' WHERE id = '" + id + "'";
+        try {
+            this.statement.executeUpdate(updateSyn);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     public void insertData(Vector<String> row) {
         String id = row.elementAt(0);
         String name = row.elementAt(1);

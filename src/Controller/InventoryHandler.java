@@ -11,13 +11,8 @@ import View.InventoryPanel;
 import View.ViewPanel;
 
 public class InventoryHandler extends Handler {
-    private static InventoryData inventoryData;
+    private InventoryData inventoryData;
     private InventoryPanel inventoryPanel;
-
-    static void updateUI() {
-        if (inventoryData != null)
-            inventoryData.updateData();
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -41,7 +36,6 @@ public class InventoryHandler extends Handler {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.inventoryPanel.getDeleteButton()) {
             inventoryData.deleteTable();
-            inventoryData.updateData();
             inventoryPanel.updateUI();
         }
     }

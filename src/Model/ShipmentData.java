@@ -44,6 +44,12 @@ public class ShipmentData extends Data {
         return String.valueOf(total);
     }
 
+    public void clearData() {
+        for (int i = this.data.getRowCount() - 1; i > -1; i--) {
+            this.data.removeRow(i);
+        }
+    }
+
     private boolean isExistBarcodeNum(String barcode) {
         for (int i = 0; i < this.data.getRowCount(); i++) {
             if (this.data.getValueAt(i, 0).equals(barcode)) {

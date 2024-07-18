@@ -36,8 +36,8 @@ public class InventoryData extends Data {
         return instance.data;
     }
 
-    // I used setDataVector update data
-    public void updateData() {
+    // I used setDataVector update data table model
+    private static void updateDataTableModel() {
         instance.data.setDataVector(inventoryDB.queryAllData(), instance.columnName);
     }
     /**
@@ -48,6 +48,12 @@ public class InventoryData extends Data {
         for (int i = 0; i < list.size(); i++) {
             InventoryData.inventoryDB.insertData(list.elementAt(i));
         }
+        updateDataTableModel();
+    }
+
+    public static void updateNewData(String id, String num){
+        InventoryData.inventoryDB.updateDataNum(id, num);
+        updateDataTableModel();
     }
 
     public static Vector<String> queryOnceData(String barcode){
@@ -70,5 +76,6 @@ public class InventoryData extends Data {
 
     public void deleteTable(){
         inventoryDB.deleteTable();
+        updateDataTableModel();
     }
 }
