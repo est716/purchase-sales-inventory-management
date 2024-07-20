@@ -17,14 +17,20 @@ public class RestorkData extends Data {
     }
 
     public void insertData(String barcodeString) {
+        Vector<String> result = InventoryData.getInstance().queryOnceData(barcodeString);
+        Vector<String> vector = new Vector<String>(4);
+        vector.setSize(4);
+        if (!result.isEmpty()) {
+            vector.set(1, result.get(1));
+            vector.set(2, result.get(2));
+        }
+
         if (!isExistBarcodeNum(barcodeString)) {
-            Vector<String> vector = new Vector<String>(4);
-            vector.add(barcodeString);
-            vector.add("");
-            vector.add("");
-            vector.add("1");
+            vector.set(0, barcodeString);
+            vector.set(3, "1");
             this.data.addRow(vector);
         }
+        
     }
 
     public void clearData() {
