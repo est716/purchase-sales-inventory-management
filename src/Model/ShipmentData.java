@@ -23,7 +23,7 @@ public class ShipmentData extends Data {
      */
     public boolean insertData(String barcode) {
         if (!isExistBarcodeNum(barcode)) {
-            Vector<String> row = InventoryData.queryOnceData(barcode);
+            Vector<String> row = InventoryData.getInstance().queryOnceData(barcode);
             if (!row.isEmpty()) {
                 row.setElementAt("1", 3);
                 this.data.addRow(row);

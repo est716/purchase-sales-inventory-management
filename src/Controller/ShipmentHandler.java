@@ -57,7 +57,7 @@ public class ShipmentHandler extends Handler {
                     String id = (String) dfm.getValueAt(i, 0);
                     String num = (String) dfm.getValueAt(i, 3);
                     //triggerEvent
-                    InventoryData.updateNewData(id, num);
+                    InventoryData.getInstance().updateNewData(id, num);
                 }
                 shipmentData.clearData();
         }

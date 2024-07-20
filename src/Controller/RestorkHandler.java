@@ -43,7 +43,7 @@ public class RestorkHandler extends Handler {
     public void actionPerformed(ActionEvent e) {
         if (this.restorkPanel != null && this.restorkData != null) {
             if (e.getSource() == this.restorkPanel.getIntoButton()) {
-                InventoryData.insertData(this.restorkPanel.getRestorkList());
+                InventoryData.getInstance().insertData(this.restorkPanel.getRestorkList());
                 this.restorkData.clearData();
                 this.restorkPanel.updateUI();
                 System.out.println("test1");
