@@ -10,6 +10,7 @@ import Model.Data;
 
 import View.ViewPanel;
 
+// can test used KeyAdapter, MouseAdapter
 public abstract class Handler implements KeyListener, ActionListener, MouseListener {
 
     public Handler() {

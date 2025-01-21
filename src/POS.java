@@ -51,6 +51,8 @@ public class POS {
         shipmentHandler.bindingToView(homePage.getShipmentPanel());
         shipmentHandler.bindingToModel(shipmentData);
 
+
+        // add object of event listener
         homePage.getRestorkPanel().addListener(restorkHandler);
         homePage.getInventoryPanel().addListener(inventoryHandler);
         homePage.getShipmentPanel().addListener(shipmentHandler);
