@@ -50,6 +50,22 @@ public class ShipmentData extends Data {
         }
     }
 
+    public Vector<String> getOnceData(String barcodeString){
+        int i = 0;
+        Vector<String> row = new Vector<String>();
+        while (this.data.getRowCount() != 0 && i < this.data.getRowCount()) {
+            if (this.data.getValueAt(i, 0).toString().equals(barcodeString)) {
+                row.add(this.data.getValueAt(i, 0).toString());
+                row.add(this.data.getValueAt(i, 1).toString());
+                row.add(this.data.getValueAt(i, 2).toString());
+                row.add(this.data.getValueAt(i, 3).toString());
+                break;
+            }
+            ++i;
+        }
+        return row;
+    }
+
     private boolean isExistBarcodeNum(String barcode) {
         for (int i = 0; i < this.data.getRowCount(); i++) {
             if (this.data.getValueAt(i, 0).equals(barcode)) {

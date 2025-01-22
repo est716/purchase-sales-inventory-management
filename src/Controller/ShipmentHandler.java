@@ -28,15 +28,27 @@ public class ShipmentHandler extends Handler {
         if (this.shipmentData != null && this.shipmentPanel != null) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 String barcodeString = shipmentPanel.getShipmentInput().getText();
-                boolean isExist = shipmentData.insertData(barcodeString);
+                boolean isExist = this.shipmentData.insertData(barcodeString);
                 shipmentPanel.getShipmentInput().setText("");
-                if (isExist) {
-                    shipmentPanel.setShipmentLabelCountingSum(
-                    shipmentData.getTotalPrice()
-                    );
+                
+                int inventoryCount = 0;
+                int nowBarcodeProductCount = 0;
+
+                // 將特定商品的現有庫存轉成Int
+                if (isExist)
+                    inventoryCount = Integer.parseInt(InventoryData.getInstance().queryOnceData(barcodeString).get(3));
+                // 將現在所輸入之商品的數量取回
+                Vector<String> row = this.shipmentData.getOnceData(barcodeString);
+                if (!row.isEmpty())
+                    nowBarcodeProductCount = Integer.parseInt(row.get(3));
+                
+                boolean isNotNull = nowBarcodeProductCount <= inventoryCount;
+
+                if (isExist && isNotNull) {
+                    shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
                     shipmentPanel.updateUI();
                 }else{
-                    JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在", "警告", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在或商品不足", "警告", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
