@@ -46,10 +46,12 @@ public class ShipmentHandler extends Handler {
 
                 if (isExist && isNotNull) {
                     shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
-                    shipmentPanel.updateUI();
                 }else{
+                    // 修改barcode對應的價格欄位
+                    this.shipmentData.modifyOnecData(String.valueOf(inventoryCount), barcodeString, 3);
                     JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在或商品不足", "警告", JOptionPane.ERROR_MESSAGE);
                 }
+                shipmentPanel.updateUI();
             }
         }
     }

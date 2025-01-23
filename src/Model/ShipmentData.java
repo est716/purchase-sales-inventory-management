@@ -27,17 +27,17 @@ public class ShipmentData extends Data {
             if (!row.isEmpty()) {
                 row.setElementAt("1", 3);
                 this.data.addRow(row);
-            }else{
+            } else {
                 return false;
             }
         }
         return true;
     }
 
-    public String getTotalPrice(){
+    public String getTotalPrice() {
         int total = 0;
         for (int i = 0; i < this.data.getRowCount(); i++) {
-            int price = Integer.parseInt(this.data.getValueAt(i, 2).toString()) ;
+            int price = Integer.parseInt(this.data.getValueAt(i, 2).toString());
             int num = Integer.parseInt(this.data.getValueAt(i, 3).toString());
             total += price * num;
         }
@@ -50,20 +50,33 @@ public class ShipmentData extends Data {
         }
     }
 
-    public Vector<String> getOnceData(String barcodeString){
-        int i = 0;
+    public Vector<String> getOnceData(String barcodeString) {
         Vector<String> row = new Vector<String>();
+        int i = findRow(barcodeString);
+        row.add(this.data.getValueAt(i, 0).toString());
+        row.add(this.data.getValueAt(i, 1).toString());
+        row.add(this.data.getValueAt(i, 2).toString());
+        row.add(this.data.getValueAt(i, 3).toString());
+        return row;
+    }
+
+    public void modifyOnecData(String content, String barcodeString, int column) {
+        int row = findRow(barcodeString);
+        this.data.setValueAt(content, row, column);
+        if (this.data.getValueAt(row, column).toString().equals("0")) {
+            this.data.removeRow(row);
+        }
+    }
+
+    private int findRow(String barcodeString) {
+        int i = 0;
         while (this.data.getRowCount() != 0 && i < this.data.getRowCount()) {
             if (this.data.getValueAt(i, 0).toString().equals(barcodeString)) {
-                row.add(this.data.getValueAt(i, 0).toString());
-                row.add(this.data.getValueAt(i, 1).toString());
-                row.add(this.data.getValueAt(i, 2).toString());
-                row.add(this.data.getValueAt(i, 3).toString());
                 break;
             }
             ++i;
         }
-        return row;
+        return i;
     }
 
     private boolean isExistBarcodeNum(String barcode) {
