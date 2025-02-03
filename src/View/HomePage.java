@@ -32,7 +32,7 @@ public class HomePage extends JFrame {
         this.mainTab.add("入貨", this.restorkPanel); // index 1
         this.mainTab.add("庫存", this.inventoryPanel); // index 2
 
-        this.mainTab.setFont(new Font("標楷體", Font.PLAIN, 25));
+        this.mainTab.setFont(new Font("標楷體", Font.PLAIN, 35));
 
         // add mainTab to JFrame
         this.add(this.mainTab, BorderLayout.CENTER);

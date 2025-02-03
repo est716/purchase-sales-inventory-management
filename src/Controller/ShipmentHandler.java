@@ -18,6 +18,9 @@ public class ShipmentHandler extends Handler {
 
     private ShipmentPanel shipmentPanel = null;
     private ShipmentData shipmentData = null;
+    private final boolean BARCODE_MODEL = false;
+    private final boolean PAY_MODEL = true;
+    private boolean modelState = BARCODE_MODEL;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -26,33 +29,46 @@ public class ShipmentHandler extends Handler {
     @Override
     public void keyPressed(KeyEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                String barcodeString = shipmentPanel.getShipmentInput().getText();
-                boolean isExist = this.shipmentData.insertData(barcodeString);
-                shipmentPanel.getShipmentInput().setText("");
-                
-                int inventoryCount = 0;
-                int nowBarcodeProductCount = 0;
+            barcodeAction(e);
+            changeModelState(e);
+            this.shipmentPanel.updateUI();
+        }
+    }
 
-                // 將特定商品的現有庫存轉成Int
-                if (isExist)
-                    inventoryCount = Integer.parseInt(InventoryData.getInstance().queryOnceData(barcodeString).get(3));
-                // 將現在所輸入之商品的數量取回
-                Vector<String> row = this.shipmentData.getOnceData(barcodeString);
-                if (!row.isEmpty())
-                    nowBarcodeProductCount = Integer.parseInt(row.get(3));
-                
-                boolean isNotNull = nowBarcodeProductCount <= inventoryCount;
+    private void barcodeAction(KeyEvent e){
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && this.modelState == this.BARCODE_MODEL) {
+            String barcodeString = shipmentPanel.getShipmentInput().getText();
+            boolean isExist = this.shipmentData.insertData(barcodeString);
+            this.shipmentPanel.shipmentInputClear();
+            
+            int inventoryCount = 0;
+            int nowBarcodeProductCount = 0;
 
-                if (isExist && isNotNull) {
-                    shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
-                }else{
-                    // 修改barcode對應的價格欄位
-                    this.shipmentData.modifyOnecData(String.valueOf(inventoryCount), barcodeString, 3);
-                    JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在或商品不足", "警告", JOptionPane.ERROR_MESSAGE);
-                }
-                shipmentPanel.updateUI();
+            // 將特定商品的現有庫存轉成Int
+            if (isExist)
+                inventoryCount = Integer.parseInt(InventoryData.getInstance().queryOnceData(barcodeString).get(3));
+            // 將現在所輸入之商品的數量取回
+            Vector<String> row = this.shipmentData.getOnceData(barcodeString);
+            if (!row.isEmpty())
+                nowBarcodeProductCount = Integer.parseInt(row.get(3));
+            
+            boolean isNotNull = nowBarcodeProductCount <= inventoryCount;
+
+            if (isExist && isNotNull) {
+                shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
+            }else{
+                // 修改barcode對應的價格欄位
+                this.shipmentData.modifyOnecData(String.valueOf(inventoryCount), barcodeString, 3);
+                JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在或商品不足", "警告", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+
+    private void changeModelState(KeyEvent e){
+        if (e.getKeyCode() == KeyEvent.VK_DECIMAL || e.getKeyCode() == KeyEvent.VK_PERIOD) {
+            this.modelState = this.PAY_MODEL;
+            this.shipmentPanel.getShipmentButton().setEnabled(this.PAY_MODEL);
+            this.shipmentPanel.shipmentInputClear();
         }
     }
 
@@ -66,6 +82,14 @@ public class ShipmentHandler extends Handler {
     public void actionPerformed(ActionEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null
                 && this.shipmentPanel.getShipmentButton() == e.getSource()) {
+
+                int sum = Integer.valueOf(this.shipmentData.getTotalPrice());
+                int chargeMoney = Integer.valueOf(this.shipmentPanel.getShipmentInput().getText());
+                int changeMoney = chargeMoney - sum;
+                this.shipmentPanel.setChargeMoneyLabelText(String.valueOf(chargeMoney));
+                this.shipmentPanel.setChangeMoneyLabelText(String.valueOf(changeMoney));
+
+
                 DefaultTableModel dfm = shipmentData.getData();
                 for(int i = 0; i < dfm.getRowCount(); i++){
                     String id = (String) dfm.getValueAt(i, 0);
@@ -74,6 +98,10 @@ public class ShipmentHandler extends Handler {
                     InventoryData.getInstance().updateNewData(id, num);
                 }
                 shipmentData.clearData();
+                this.modelState = this.BARCODE_MODEL;
+                // shipment button is disable in barcode model
+                this.shipmentPanel.getShipmentButton().setEnabled(this.modelState);
+                
         }
     }
 
@@ -127,4 +155,8 @@ public class ShipmentHandler extends Handler {
     @Override
     protected void isNonNumberAndClearTextView(char c) {
     }
+
+
+
+    
 }

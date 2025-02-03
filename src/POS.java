@@ -33,7 +33,7 @@ public class POS {
         ShipmentHandler shipmentHandler = new ShipmentHandler();
 
         HomePage homePage = new HomePage();
-        homePage.setSize(800, 800);
+        homePage.setSize(1300, 800);
         homePage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homePage.setLocationRelativeTo(null);
         homePage.setVisible(true);
