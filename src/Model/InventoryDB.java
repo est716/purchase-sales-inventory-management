@@ -15,10 +15,12 @@ public class InventoryDB {
     private Statement statement;
 
     public InventoryDB() {
-        String jdbcURL = "jdbc:derby:./InventoryInformation;create=true";
+        this.connection = DatabaseManager.getInstance().getConnection();
+        createTableIfNotExists();
+    }
 
+    private void createTableIfNotExists() {
         try {
-            this.connection = DriverManager.getConnection(jdbcURL);
             DatabaseMetaData dbm = this.connection.getMetaData();
             this.statement = this.connection.createStatement();
             ResultSet rs = dbm.getTables(null, null, "INVENTORY", null);
@@ -32,16 +34,16 @@ public class InventoryDB {
             // TODO: handle exception
             e.printStackTrace();
         }
-
     }
 
     // This method can only update the quantity of the product
-    public void updateDataNum(String id, String num){
+    public void updateDataNum(String id, String num) {
         Vector<String> oldData = queryOnceData(id);
         String oldNumString = oldData.get(3);
         int oldNum = Integer.valueOf(oldNumString);
         int newNum = Integer.valueOf(num);
-        String updateSyn = "UPDATE INVENTORY SET num = '" + String.valueOf(oldNum - newNum) + "' WHERE id = '" + id + "'";
+        String updateSyn = "UPDATE INVENTORY SET num = '" + String.valueOf(oldNum - newNum) + "' WHERE id = '" + id
+                + "'";
         try {
             this.statement.executeUpdate(updateSyn);
         } catch (SQLException e) {
@@ -60,7 +62,7 @@ public class InventoryDB {
         try {
             ResultSet rs = this.statement.executeQuery(querySyn);
             if (rs.next()) {
-                if (id == rs.getString("id"))
+                if (id.equals(rs.getString("id")))
                     System.out.println(rs);
                 int dbNum = Integer.valueOf(rs.getString("num"));
                 int numI = Integer.valueOf(num);
@@ -134,7 +136,7 @@ public class InventoryDB {
 
     public void deleteTable() {
         String deleteStatement = "DELETE FROM INVENTORY";
-        try{
+        try {
             this.statement.execute(deleteStatement);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -144,13 +146,9 @@ public class InventoryDB {
 
     public void disconnected() {
         if (this.statement != null || this.connection != null) {
-            try {
-                this.connection.close();
-                System.out.println("database is closed");
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            this.statement = null;
+            this.connection = null;
+            DatabaseManager.getInstance().closeConnection();
         }
     }
 }
