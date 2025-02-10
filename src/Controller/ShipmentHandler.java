@@ -35,12 +35,12 @@ public class ShipmentHandler extends Handler {
         }
     }
 
-    private void barcodeAction(KeyEvent e){
+    private void barcodeAction(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER && this.modelState == this.BARCODE_MODEL) {
             String barcodeString = shipmentPanel.getShipmentInput().getText();
             boolean isExist = this.shipmentData.insertData(barcodeString);
             this.shipmentPanel.shipmentInputClear();
-            
+
             int inventoryCount = 0;
             int nowBarcodeProductCount = 0;
 
@@ -51,12 +51,12 @@ public class ShipmentHandler extends Handler {
             Vector<String> row = this.shipmentData.getOnceData(barcodeString);
             if (!row.isEmpty())
                 nowBarcodeProductCount = Integer.parseInt(row.get(3));
-            
+
             boolean isNotNull = nowBarcodeProductCount <= inventoryCount;
 
             if (isExist && isNotNull) {
                 shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
-            }else{
+            } else {
                 // 修改barcode對應的價格欄位
                 this.shipmentData.modifyOnecData(String.valueOf(inventoryCount), barcodeString, 3);
                 JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在或商品不足", "警告", JOptionPane.ERROR_MESSAGE);
@@ -64,7 +64,7 @@ public class ShipmentHandler extends Handler {
         }
     }
 
-    private void changeModelState(KeyEvent e){
+    private void changeModelState(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DECIMAL || e.getKeyCode() == KeyEvent.VK_PERIOD) {
             this.modelState = this.PAY_MODEL;
             this.shipmentPanel.getShipmentButton().setEnabled(this.PAY_MODEL);
@@ -76,32 +76,36 @@ public class ShipmentHandler extends Handler {
     public void keyReleased(KeyEvent e) {
     }
 
-
-    //當售出按鈕被觸發時，將會進行資料更新
+    // 當售出按鈕被觸發時，將會進行資料更新
     @Override
     public void actionPerformed(ActionEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null
                 && this.shipmentPanel.getShipmentButton() == e.getSource()) {
 
+            if (this.shipmentPanel.getShipmentInput().getText().equals("")) {
+                JOptionPane.showMessageDialog(shipmentPanel, "請輸入收取金額", "警告", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // 計算找零
                 int sum = Integer.valueOf(this.shipmentData.getTotalPrice());
                 int chargeMoney = Integer.valueOf(this.shipmentPanel.getShipmentInput().getText());
                 int changeMoney = chargeMoney - sum;
                 this.shipmentPanel.setChargeMoneyLabelText(String.valueOf(chargeMoney));
                 this.shipmentPanel.setChangeMoneyLabelText(String.valueOf(changeMoney));
 
-
                 DefaultTableModel dfm = shipmentData.getData();
-                for(int i = 0; i < dfm.getRowCount(); i++){
+                for (int i = 0; i < dfm.getRowCount(); i++) {
                     String id = (String) dfm.getValueAt(i, 0);
                     String num = (String) dfm.getValueAt(i, 3);
-                    //triggerEvent
+                    // triggerEvent
                     InventoryData.getInstance().updateNewData(id, num);
                 }
                 shipmentData.clearData();
                 this.modelState = this.BARCODE_MODEL;
                 // shipment button is disable in barcode model
                 this.shipmentPanel.getShipmentButton().setEnabled(this.modelState);
-                
+                this.shipmentPanel.shipmentInputClear();
+            }
+
         }
     }
 
@@ -156,7 +160,4 @@ public class ShipmentHandler extends Handler {
     protected void isNonNumberAndClearTextView(char c) {
     }
 
-
-
-    
 }
