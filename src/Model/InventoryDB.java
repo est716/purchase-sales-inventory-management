@@ -8,8 +8,13 @@ import java.sql.Statement;
 import java.util.Vector;
 
 public class InventoryDB {
-    private final String createInventoryTableSyn = "Create Table INVENTORY (id VARCHAR(40) not null,"
-            + "name VARCHAR(128), price VARCHAR(40), num VARCHAR(40))";
+    private final String createInventoryTableSyn
+        = "Create Table INVENTORY (" + 
+            "id VARCHAR(40) not null, " +
+            "name VARCHAR(128), " + 
+            "price VARCHAR(40), " + 
+            "num VARCHAR(40), " + 
+            "PRIMARY KEY (id))";
     private Connection connection;
     private Statement statement;
 
@@ -137,6 +142,7 @@ public class InventoryDB {
         String deleteStatement = "DELETE FROM INVENTORY";
         try {
             this.statement.execute(deleteStatement);
+            System.out.println("delete table");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
