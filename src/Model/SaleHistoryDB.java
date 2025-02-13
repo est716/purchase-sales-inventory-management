@@ -6,14 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-
 public class SaleHistoryDB {
     private final String createSaleTable 
         = "Create Table SALEHISTORY (" +
             "id VARCHAR(40) NOT NULL, " +
             "num VARCHAR(40), " +
             "date_sale DATE NOT NULL, " +
-            "PRIMARY KEY (id, date_sale));";
+            "PRIMARY KEY (id, date_sale))";
     private static Connection connection;
     private static SaleHistoryDB instance;
 
@@ -28,7 +27,7 @@ public class SaleHistoryDB {
             PreparedStatement statement = connection.prepareStatement(createSaleTable);
             ResultSet rs = dbm.getTables(null, null, "INVENTORY", null);
             if (!rs.next()) {
-                statement.executeUpdate(this.createSaleTable);
+                statement.executeUpdate();
                 System.out.println("create saleHistory Table");
             } else {
                 System.out.println("exist saleHistory Table");
@@ -48,11 +47,12 @@ public class SaleHistoryDB {
     public void insertData(Vector<String> row){
         Vector<String> q = queryOnceData(row.get(0), row.get(2));
         if (q.isEmpty()) {
-            String insertSyn = "INSERT INTO SALEHISTORY (id, num, date) VALUES (?, ?, ?);";
+            String insertSyn = "INSERT INTO SALEHISTORY (id, num, date) VALUES (?, ?, ?)";
             try (PreparedStatement insertStatement = connection.prepareStatement(insertSyn)) {
                 insertStatement.setString(1, row.get(0));
                 insertStatement.setString(2, row.get(1));
                 insertStatement.setString(3, row.get(2));
+                System.out.println(row.toString());
                 insertStatement.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,7 +65,7 @@ public class SaleHistoryDB {
     }
 
     public void updateData(Vector<String> row){
-        String updateSyn = "UPDATE SALEHISTORY SET num = ? WHERE id = ? AND sale_date = ?;";
+        String updateSyn = "UPDATE SALEHISTORY SET num = ? WHERE id = ? AND sale_date = ?";
         try (PreparedStatement updateStament = connection.prepareStatement(updateSyn)) {
             updateStament.setString(1, row.get(1)); // num
             updateStament.setString(2, row.get(0)); // id
@@ -77,7 +77,7 @@ public class SaleHistoryDB {
     }
 
     public Vector<Vector<String>> queryData(){
-        String querySyn = "Select * FROM SALEHISTORY;";
+        String querySyn = "Select * FROM SALEHISTORY";
         Vector<Vector<String>> results = new Vector<Vector<String>>();
 
         // try-with-resource
@@ -97,7 +97,7 @@ public class SaleHistoryDB {
     }
 
     public Vector<String> queryOnceData(String id, String date){
-        String querySyn = "Select * FROM SALEHISTORY WHERE id = ? AND sale_date = ?;";
+        String querySyn = "Select * FROM SALEHISTORY WHERE id = ? AND sale_date = ?";
         Vector<String> result = new Vector<String>();
 
         // 嘗試使用 try-with-resource，觀察是否會因此造成連線中斷

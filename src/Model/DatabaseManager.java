@@ -15,6 +15,13 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                closeConnection();
+                System.out.println("DB connection is closed");
+            }  
+        });
     }
 
     public static synchronized DatabaseManager getInstance(){

@@ -19,13 +19,6 @@ public class InventoryData extends Data {
     private InventoryData() {
         System.out.println("created DB");
         inventoryDB = new InventoryDB();
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                inventoryDB.disconnected();
-            }
-        });
-
         this.data = new DefaultTableModel(this.inventoryDB.queryAllData(), this.columnName);
     }
 
