@@ -21,10 +21,14 @@ public class SaleHistoryData {
         return instance;
     }
 
-    public void insertData(Vector<Vector<String>> list){
-        for (Vector<String> row : list) {
-            saleHistoryDB.insertData(row);   
-        }
+    public void insertData(String id, String num, String sale_date){
+        Vector<String> row = new Vector<>();
+        row.add(id);
+        row.add(num);
+        row.add(sale_date);
+        saleHistoryDB.insertData(row);
     }
+
+
 
 }
