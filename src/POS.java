@@ -17,13 +17,6 @@ import View.HomePage;
 
 public class POS {
     public static void main(String[] args) throws Exception {
-        // HomePage homePage = new HomePage();
-        // homePage.setSize(800, 800);s
-        // homePage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // homePage.setLocationRelativeTo(null);
-        // homePage.setVisible(true);
-        // homePage.focusToShipmentTextView();
-        // homePage.alertInventoryNum();
 
         // Model.ShipmentData shipmentData = new Model.ShipmentData();
         InventoryData inventoryData = InventoryData.getInstance();
@@ -61,7 +54,5 @@ public class POS {
         homePage.getRestorkPanel().addListener(restorkHandler);
         homePage.getInventoryPanel().addListener(inventoryHandler);
         homePage.getShipmentPanel().addListener(shipmentHandler);
-        // homePage.getShipmentPanel().getShipmentTable().setModel(shipmentPanelHandler.getTableModel());
-        
     }
 }

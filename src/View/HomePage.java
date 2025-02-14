@@ -16,6 +16,7 @@ public class HomePage extends JFrame {
     private RestorkPanel restorkPanel;
     private ShipmentPanel shipmentPanel;
     private InventoryPanel inventoryPanel;
+    private SaleHistoryChartPanel saleHistoryChartPanel;
 
     public HomePage() {
         // set BorderLayout to HomePage Frame
@@ -26,11 +27,13 @@ public class HomePage extends JFrame {
         this.restorkPanel = new RestorkPanel();
         this.shipmentPanel = new ShipmentPanel();
         this.inventoryPanel = new InventoryPanel();
+        this.saleHistoryChartPanel = new SaleHistoryChartPanel();
 
         // Panel add to mainTab
         this.mainTab.add("出貨", this.shipmentPanel); // index 0
         this.mainTab.add("入貨", this.restorkPanel); // index 1
         this.mainTab.add("庫存", this.inventoryPanel); // index 2
+        this.mainTab.add("銷售紀錄表", this.saleHistoryChartPanel); // index 3
 
         this.mainTab.setFont(new Font("標楷體", Font.PLAIN, 35));
 
@@ -85,4 +88,7 @@ public class HomePage extends JFrame {
         return inventoryPanel;
     }
 
+    public SaleHistoryChartPanel getSaleHistoryChartPanel() {
+        return saleHistoryChartPanel;
+    }
 }
