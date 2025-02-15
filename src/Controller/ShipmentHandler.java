@@ -3,6 +3,7 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -10,7 +11,9 @@ import javax.swing.table.DefaultTableModel;
 
 import Model.Data;
 import Model.InventoryData;
+import Model.SaleHistoryData;
 import Model.ShipmentData;
+import View.SaleHistoryChartPanel;
 import View.ShipmentPanel;
 import View.ViewPanel;
 
@@ -98,7 +101,9 @@ public class ShipmentHandler extends Handler {
                     String num = (String) dfm.getValueAt(i, 3);
                     // triggerEvent
                     InventoryData.getInstance().updateNewData(id, num);
+                    SaleHistoryData.getInstance().insertData(id, num);
                 }
+
                 shipmentData.clearData();
                 this.modelState = this.BARCODE_MODEL;
                 // shipment button is disable in barcode model

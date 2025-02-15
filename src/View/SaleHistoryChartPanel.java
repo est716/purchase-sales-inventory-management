@@ -1,7 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Color;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -11,33 +11,56 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class SaleHistoryChartPanel extends ViewPanel {
 
+    private ChartPanel chartPanel;
+    private JFreeChart barChart;
+    private DefaultCategoryDataset dataset;
     public SaleHistoryChartPanel() {
         // initialize layout
         this.setLayout(new BorderLayout());
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(150, "Sales", "Product A");
-        dataset.addValue(200, "Sales", "Product B");
-        dataset.addValue(50, "Sales", "Product C");
-        dataset.addValue(120, "Sales", "Product D");
+        // dataset need get data from SaleHistoryData
 
-        JFreeChart barChart = ChartFactory.createBarChart(
+        this.barChart = ChartFactory.createBarChart(
                 "商品銷售數量長條圖",
                 "商品",
                 "數量",
-                dataset,
+                this.dataset,
                 PlotOrientation.VERTICAL,
                 true,
                 false,
                 false
         );
 
-        barChart.getTitle().setFont(font);
-        barChart.getCategoryPlot().getDomainAxis().setLabelFont(font);
-        barChart.getCategoryPlot().getRangeAxis().setLabelFont(font);
-        barChart.getCategoryPlot().getRangeAxis().setLabelAngle(Math.PI / 2);
+        setBarChartStyle();
 
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        this.add(chartPanel, BorderLayout.CENTER);
+        this.chartPanel = new ChartPanel(this.barChart);
+        this.add(this.chartPanel, BorderLayout.CENTER);
+    }
+
+    private void setBarChartStyle(){
+        this.barChart.getTitle().setFont(font); // 設定標題大小
+        this.barChart.getLegend().setItemFont(font.deriveFont(20f)); // 設定Item大小
+        this.barChart.getCategoryPlot().getDomainAxis().setLabelFont(font); // 設定X軸名稱大小
+        this.barChart.getCategoryPlot().getDomainAxis().setTickLabelFont(font); // 設定X軸刻度大小
+        this.barChart.getCategoryPlot().getRangeAxis().setLabelFont(font); // 設定Y軸名稱大小
+        this.barChart.getCategoryPlot().getRangeAxis().setTickLabelFont(font); // 設定Y軸刻度大小
+        this.barChart.getCategoryPlot().getRangeAxis().setLabelAngle(Math.PI / 2); // y axis label rotate 90 degree
+        this.barChart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.decode("#64b5f6")); // set barChart Color
+        this.barChart.setBackgroundPaint(Color.WHITE); // set chart background
+        this.barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE); // set chart background
+
+    }
+
+    public void setDataSet(DefaultCategoryDataset dataset){
+        this.dataset = dataset;
+    }
+
+    public void updateUI(){
+        revalidate();
+        repaint();
+    }
+
+    public JFreeChart getbarChart(){
+        return this.barChart;
     }
 }

@@ -2,33 +2,42 @@ package Model;
 
 import java.util.Vector;
 
-import javax.swing.table.DefaultTableModel;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class SaleHistoryData {
     private static SaleHistoryData instance;
-    private DefaultTableModel data;
+    DefaultCategoryDataset dataset;
     private SaleHistoryDB saleHistoryDB;
-    
-    private SaleHistoryData(){
+
+    private SaleHistoryData() {
         saleHistoryDB = SaleHistoryDB.getInstance();
-        System.out.println("create SaleHistory table");
+        this.dataset = new DefaultCategoryDataset();
+        queryData();
     }
 
-    public SaleHistoryData getInstance(){
+    public static SaleHistoryData getInstance() {
         if (instance == null) {
             instance = new SaleHistoryData();
         }
         return instance;
     }
 
-    public void insertData(String id, String num, String sale_date){
+    public void insertData(String id, String num) {
         Vector<String> row = new Vector<>();
         row.add(id);
         row.add(num);
-        row.add(sale_date);
         saleHistoryDB.insertData(row);
     }
 
+    public void queryData() {
+        Vector<Vector<String>> list = this.saleHistoryDB.queryData();
+        for (Vector<String> row : list) {
+            this.dataset.addValue(Integer.parseInt(row.get(2)), "商品數量", row.get(1));
+        }
+    }
 
+    public DefaultCategoryDataset getDataSet() {
+        return this.dataset;
+    }
 
 }

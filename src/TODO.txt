@@ -1,3 +1,6 @@
 1.新增銷售可視化圖表(可以時間查詢)、可依據時間區間顯示銷售額及數量
 
 要實作UI介面及SaleHistoryData(Model)，並測試SaleHistoryDB
+
+
+JFreeChart dataset 似乎無法讀取更新後的資料
