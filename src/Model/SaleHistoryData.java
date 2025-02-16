@@ -32,7 +32,7 @@ public class SaleHistoryData {
     public void queryData() {
         Vector<Vector<String>> list = this.saleHistoryDB.queryData();
         for (Vector<String> row : list) {
-            this.dataset.addValue(Integer.parseInt(row.get(2)), "商品數量", row.get(1));
+            this.dataset.addValue(Integer.valueOf(row.get(2)), "商品數量", row.get(1));
         }
     }
 

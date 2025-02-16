@@ -101,7 +101,7 @@ public class ShipmentHandler extends Handler {
                     String num = (String) dfm.getValueAt(i, 3);
                     // triggerEvent
                     InventoryData.getInstance().updateNewData(id, num);
-                    SaleHistoryData.getInstance().insertData(id, num);
+                    SaleHistoryData.getInstance().insertData(id, num); // bug 
                 }
 
                 shipmentData.clearData();

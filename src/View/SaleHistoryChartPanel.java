@@ -53,6 +53,7 @@ public class SaleHistoryChartPanel extends ViewPanel {
 
     public void setDataSet(DefaultCategoryDataset dataset){
         this.dataset = dataset;
+        this.barChart.getCategoryPlot().setDataset(this.dataset);
     }
 
     public void updateUI(){
