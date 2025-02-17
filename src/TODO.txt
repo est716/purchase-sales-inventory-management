@@ -3,4 +3,7 @@
 要實作UI介面及SaleHistoryData(Model)，並測試SaleHistoryDB
 
 
-JFreeChart dataset 似乎無法讀取更新後的資料
+SaleHistoryDB, SaleHistoryData 重構，現如今發現問題:
+1.SaleHistoryDB, line 64, q is not get(1), should get(2), need code refactoring.
+2.SaleHistoryDB, line 75, row is not get(2), it range out.
+3.JFreeChart is need update dataset, but object logic is confusion, need code refactoring.
