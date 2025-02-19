@@ -9,6 +9,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import Controller.InventoryHandler;
 import Controller.RestorkHandler;
+import Controller.SaleHistoryHandler;
 import Controller.ShipmentHandler;
 import Model.InventoryData;
 import Model.RestorkData;
@@ -31,6 +32,7 @@ public class POS {
         RestorkHandler restorkHandler = new RestorkHandler();
         InventoryHandler inventoryHandler = new InventoryHandler();
         ShipmentHandler shipmentHandler = new ShipmentHandler();
+        SaleHistoryHandler saleHistoryHandler = new SaleHistoryHandler();
 
         HomePage homePage = new HomePage();
         homePage.setSize(1300, 800);
@@ -51,12 +53,15 @@ public class POS {
         inventoryHandler.bindingToModel(inventoryData);
         shipmentHandler.bindingToView(homePage.getShipmentPanel());
         shipmentHandler.bindingToModel(shipmentData);
-
+        saleHistoryHandler.bindingToView(homePage.getSaleHistoryChartPanel());
+        saleHistoryHandler.bindingToModel(saleHistoryData);
+        // add notification
+        shipmentHandler.bindingToSaleHistory(saleHistoryHandler);
 
         // add object of event listener
         homePage.getRestorkPanel().addListener(restorkHandler);
         homePage.getInventoryPanel().addListener(inventoryHandler);
         homePage.getShipmentPanel().addListener(shipmentHandler);
-        
+        homePage.getSaleHistoryChartPanel().addListener(saleHistoryHandler);
     }
 }

@@ -3,7 +3,6 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -11,9 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Model.Data;
 import Model.InventoryData;
-import Model.SaleHistoryData;
 import Model.ShipmentData;
-import View.SaleHistoryChartPanel;
 import View.ShipmentPanel;
 import View.ViewPanel;
 
@@ -21,6 +18,7 @@ public class ShipmentHandler extends Handler {
 
     private ShipmentPanel shipmentPanel = null;
     private ShipmentData shipmentData = null;
+    private SaleHistoryHandler saleHistoryHandler = null;
     private final boolean BARCODE_MODEL = false;
     private final boolean PAY_MODEL = true;
     private boolean modelState = BARCODE_MODEL;
@@ -101,7 +99,7 @@ public class ShipmentHandler extends Handler {
                     String num = (String) dfm.getValueAt(i, 3);
                     // triggerEvent
                     InventoryData.getInstance().updateNewData(id, num);
-                    SaleHistoryData.getInstance().insertData(id, num); // bug 
+                    this.saleHistoryHandler.insertData(id, num);  
                 }
 
                 shipmentData.clearData();
@@ -109,6 +107,7 @@ public class ShipmentHandler extends Handler {
                 // shipment button is disable in barcode model
                 this.shipmentPanel.getShipmentButton().setEnabled(this.modelState);
                 this.shipmentPanel.shipmentInputClear();
+                this.saleHistoryHandler.notification();
             }
 
         }
@@ -163,6 +162,10 @@ public class ShipmentHandler extends Handler {
 
     @Override
     protected void isNonNumberAndClearTextView(char c) {
+    }
+
+    public void bindingToSaleHistory(SaleHistoryHandler saleHistoryHandler){
+        this.saleHistoryHandler = saleHistoryHandler;
     }
 
 }

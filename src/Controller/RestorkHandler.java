@@ -101,7 +101,6 @@ public class RestorkHandler extends Handler {
 
     @Override
     protected void isNonNumberAndClearTextView(char c) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isNonNumberAndClearTextView'");
     }
 

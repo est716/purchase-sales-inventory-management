@@ -61,7 +61,7 @@ public class SaleHistoryDB {
                 e.printStackTrace();
             }
         }else{
-            int newNum = Integer.valueOf(row.get(1)) + Integer.valueOf(q.get(1));
+            int newNum = Integer.valueOf(row.get(1)) + Integer.valueOf(q.get(2));
             row.set(1, String.valueOf(newNum));
             updateData(row);
         }
@@ -72,7 +72,7 @@ public class SaleHistoryDB {
         try (PreparedStatement updateStament = connection.prepareStatement(updateSyn)) {
             updateStament.setString(1, row.get(1)); // num
             updateStament.setString(2, row.get(0)); // id
-            updateStament.setString(3, row.get(2)); // date_sale
+            updateStament.setDate(3, Date.valueOf(LocalDate.now())); // date_sale
             updateStament.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,6 +130,16 @@ public class SaleHistoryDB {
         }
         
         return result;
+    }
+
+    public void dropTable(){
+        String deleteSyn = "Drop Table SALEHISTORY";
+        try (PreparedStatement dropStatement = connection.prepareStatement(deleteSyn)) {
+            dropStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("saleHistory is drop.");
     }
 
 }

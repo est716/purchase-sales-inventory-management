@@ -27,6 +27,7 @@ public class SaleHistoryData {
         row.add(id);
         row.add(num);
         saleHistoryDB.insertData(row);
+        queryData();// update UI data
     }
 
     public void queryData() {
@@ -34,6 +35,10 @@ public class SaleHistoryData {
         for (Vector<String> row : list) {
             this.dataset.addValue(Integer.valueOf(row.get(2)), "商品數量", row.get(1));
         }
+    }
+
+    public void dropTable(){
+        this.saleHistoryDB.dropTable();
     }
 
     public DefaultCategoryDataset getDataSet() {

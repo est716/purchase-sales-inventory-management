@@ -2,6 +2,10 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -9,10 +13,14 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class SaleHistoryChartPanel extends ViewPanel {
+import Controller.Handler;
+import Controller.SaleHistoryHandler;
 
+public class SaleHistoryChartPanel extends JPanel{
+    private final Font font = new Font("標楷體", Font.PLAIN, 35);
     private ChartPanel chartPanel;
     private JFreeChart barChart;
+    private JButton dropButton;
     private DefaultCategoryDataset dataset;
     public SaleHistoryChartPanel() {
         // initialize layout
@@ -34,7 +42,11 @@ public class SaleHistoryChartPanel extends ViewPanel {
         setBarChartStyle();
 
         this.chartPanel = new ChartPanel(this.barChart);
+
+        this.dropButton = new JButton("Drop Table");
+
         this.add(this.chartPanel, BorderLayout.CENTER);
+        this.add(this.dropButton, BorderLayout.SOUTH);
     }
 
     private void setBarChartStyle(){
@@ -57,6 +69,7 @@ public class SaleHistoryChartPanel extends ViewPanel {
     }
 
     public void updateUI(){
+        // this.barChart.fireChartChanged();
         revalidate();
         repaint();
     }
@@ -64,4 +77,13 @@ public class SaleHistoryChartPanel extends ViewPanel {
     public JFreeChart getbarChart(){
         return this.barChart;
     }
+
+    public JButton getDropButton() {
+        return dropButton;
+    }
+    
+    public void addListener(SaleHistoryHandler saleHistoryHandler) {
+        this.dropButton.addActionListener(saleHistoryHandler);
+    }
+
 }
