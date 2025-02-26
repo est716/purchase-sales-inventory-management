@@ -10,7 +10,9 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import Controller.Handler;
@@ -60,7 +62,6 @@ public class SaleHistoryChartPanel extends JPanel{
         this.barChart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.decode("#64b5f6")); // set barChart Color
         this.barChart.setBackgroundPaint(Color.WHITE); // set chart background
         this.barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE); // set chart background
-
     }
 
     public void setDataSet(DefaultCategoryDataset dataset){
