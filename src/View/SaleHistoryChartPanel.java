@@ -10,9 +10,12 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.CategoryItemLabelGenerator;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import Controller.Handler;
@@ -60,6 +63,8 @@ public class SaleHistoryChartPanel extends JPanel{
         this.barChart.getCategoryPlot().getRangeAxis().setTickLabelFont(font); // 設定Y軸刻度大小
         this.barChart.getCategoryPlot().getRangeAxis().setLabelAngle(Math.PI / 2); // y axis label rotate 90 degree
         this.barChart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.decode("#64b5f6")); // set barChart Color
+        this.barChart.getCategoryPlot().getRenderer().setBaseItemLabelsVisible(true); // 設定長條圖數字顯示
+        this.barChart.getCategoryPlot().getRenderer().setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator()); // 設定長條圖數字顯示樣式
         this.barChart.setBackgroundPaint(Color.WHITE); // set chart background
         this.barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE); // set chart background
     }
