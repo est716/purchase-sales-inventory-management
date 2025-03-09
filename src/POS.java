@@ -20,15 +20,11 @@ import View.HomePage;
 public class POS {
     public static void main(String[] args) throws Exception {
 
-        // Model.ShipmentData shipmentData = new Model.ShipmentData();
         InventoryData inventoryData = InventoryData.getInstance();
         RestorkData restorkData = new RestorkData();
         ShipmentData shipmentData = new ShipmentData();
         SaleHistoryData saleHistoryData = SaleHistoryData.getInstance();
 
-
-        // Controller.ShipmentPanelHandler shipmentPanelHandler = new Controller.ShipmentPanelHandler();
-        
         RestorkHandler restorkHandler = new RestorkHandler();
         InventoryHandler inventoryHandler = new InventoryHandler();
         ShipmentHandler shipmentHandler = new ShipmentHandler();
@@ -39,13 +35,11 @@ public class POS {
         homePage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homePage.setLocationRelativeTo(null);
         homePage.setVisible(true);
-        // homePage.getShipmentPanel().addListener(shipmentPanelHandler);
 
         homePage.getInventoryPanel().setTableModel(inventoryData.getData());
         homePage.getRestorkPanel().setTableModel(restorkData.getData());
         homePage.getShipmentPanel().setTableModel(shipmentData.getData());
         homePage.getSaleHistoryChartPanel().setDataSet(saleHistoryData.getDataSet());
-        // will restrokView binding to view
 
         restorkHandler.bindingToView(homePage.getRestorkPanel());
         restorkHandler.bindingToModel(restorkData);
