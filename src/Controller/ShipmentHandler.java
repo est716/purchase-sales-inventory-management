@@ -39,27 +39,32 @@ public class ShipmentHandler extends Handler {
     private void barcodeAction(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER && this.modelState == this.BARCODE_MODEL) {
             String barcodeString = shipmentPanel.getShipmentInput().getText();
-            boolean isExist = this.shipmentData.insertData(barcodeString);
+            boolean isSuccess = this.shipmentData.insertData(barcodeString);
             this.shipmentPanel.shipmentInputClear();
 
             int inventoryCount = 0;
             int nowBarcodeProductCount = 0;
 
             // 將特定商品的現有庫存轉成Int
-            if (isExist)
+            if (isSuccess)
                 inventoryCount = Integer.parseInt(InventoryData.getInstance().queryOnceData(barcodeString).get(3));
-            // 將現在所輸入之商品的數量取回
-            Vector<String> row = this.shipmentData.getOnceData(barcodeString);
-            if (!row.isEmpty())
+            
+                // 將現在所輸入之商品的數量取回
+            Vector<String> row = null;
+            if (isSuccess)
+                row = this.shipmentData.getOnceData(barcodeString);
+            
+            if (row != null && !row.isEmpty())
                 nowBarcodeProductCount = Integer.parseInt(row.get(3));
 
-            boolean isNotNull = nowBarcodeProductCount <= inventoryCount;
+            boolean isNotNull = isSuccess && nowBarcodeProductCount <= inventoryCount;
 
-            if (isExist && isNotNull) {
+            if (isNotNull) {
                 shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
             } else {
                 // 修改barcode對應的價格欄位
-                this.shipmentData.modifyOnecData(String.valueOf(inventoryCount), barcodeString, 3);
+                if (isSuccess)
+                    this.shipmentData.modifyOnecData(String.valueOf(inventoryCount), barcodeString, 3);
                 JOptionPane.showMessageDialog(shipmentPanel, "此物品不存在或商品不足", "警告", JOptionPane.ERROR_MESSAGE);
             }
         }

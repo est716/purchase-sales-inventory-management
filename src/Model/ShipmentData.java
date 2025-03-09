@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ShipmentData extends Data {
     private DefaultTableModel data;
+    private InventoryData inventoryData = InventoryData.getInstance();
 
     public ShipmentData() {
         this.data = new DefaultTableModel();
@@ -22,15 +23,20 @@ public class ShipmentData extends Data {
      * @param barcode is String
      */
     public boolean insertData(String barcode) {
-        if (!isExistBarcodeNum(barcode)) {
-            Vector<String> row = InventoryData.getInstance().queryOnceData(barcode);
-            if (!row.isEmpty()) {
-                row.setElementAt("1", 3);
-                this.data.addRow(row);
-            } else {
-                return false;
-            }
+        int index = getIndexOfBarcodeNumInTable(barcode);
+        if (index != -1){
+            changeValueOfNumLabelOfRowData(index);
+            return true;
         }
+        return addDataFromInventoryToShipmentTable(barcode);
+    }
+
+    private boolean addDataFromInventoryToShipmentTable(String barcode) {
+        Vector<String> row = this.inventoryData.queryOnceData(barcode);
+        if (row.isEmpty())
+            return false;
+        row.setElementAt("1", 3);
+        this.data.addRow(row);
         return true;
     }
 
@@ -79,15 +85,18 @@ public class ShipmentData extends Data {
         return i;
     }
 
-    private boolean isExistBarcodeNum(String barcode) {
+    private int getIndexOfBarcodeNumInTable(String barcode) {
         for (int i = 0; i < this.data.getRowCount(); i++) {
             if (this.data.getValueAt(i, 0).equals(barcode)) {
-                String numStr = this.data.getValueAt(i, 3).toString();
-                numStr = String.valueOf(Integer.parseInt(numStr) + 1);
-                this.data.setValueAt(numStr, i, 3);
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
+    }
+
+    private void changeValueOfNumLabelOfRowData(int index) {
+        String numStr = this.data.getValueAt(index, 3).toString();
+        numStr = String.valueOf(Integer.parseInt(numStr) + 1);
+        this.data.setValueAt(numStr, index, 3);
     }
 }
