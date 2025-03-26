@@ -165,10 +165,6 @@ public class ShipmentHandler extends Handler {
         throw new UnsupportedOperationException("Unimplemented method 'getColumnName'");
     }
 
-    @Override
-    protected void isNonNumberAndClearTextView(char c) {
-    }
-
     public void bindingToSaleHistory(SaleHistoryHandler saleHistoryHandler){
         this.saleHistoryHandler = saleHistoryHandler;
     }

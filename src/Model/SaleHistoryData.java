@@ -32,6 +32,7 @@ public class SaleHistoryData {
 
     public void queryData() {
         Vector<Vector<String>> list = this.saleHistoryDB.queryData();
+        this.dataset.clear();
         for (Vector<String> row : list) {
             this.dataset.addValue(Integer.valueOf(row.get(2)), "商品數量", row.get(1));
         }

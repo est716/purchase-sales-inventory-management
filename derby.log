@@ -1,21 +1,11 @@
 ----------------------------------------------------------------
-<<<<<<< HEAD
-Sun Mar 09 16:27:00 GMT+08:00 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0195-7a03-be07-00000f210990 
+Wed Mar 12 20:58:45 GMT+08:00 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0195-8a6f-9d32-00000f216910 
 on database directory D:\VSCode\java\purchase-sales-inventory-management\InventoryInformation with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@6bc7c054 
 Loaded from file:/D:/VSCode/java/purchase-sales-inventory-management/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.2+13-LTS-58
 user.dir=D:\VSCode\java\purchase-sales-inventory-management
-=======
-Wed Feb 26 11:40:41 CST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0195-4057-a6ee-00000f4a9ad0 
-on database directory C:\Users\AT1472\Desktop\project\purchase-sales-inventory-management\InventoryInformation with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@6bc7c054 
-Loaded from file:/C:/Users/AT1472/Desktop/project/purchase-sales-inventory-management/lib/derby.jar
-java.vendor=Eclipse Adoptium
-java.runtime.version=21.0.2+13-LTS
-user.dir=C:\Users\AT1472\Desktop\project\purchase-sales-inventory-management
->>>>>>> 6b6fff062a661847d2813782b56d95e24a70c745
 os.name=Windows 11
 os.arch=amd64
 os.version=10.0

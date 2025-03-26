@@ -24,8 +24,4 @@ public abstract class Handler implements KeyListener, ActionListener, MouseListe
     public abstract Vector<Vector<String>> getData();
 
     public abstract Vector<String> getColumnName();
-
-    protected abstract void isNonNumberAndClearTextView(char c);
-
-    // protected abstract boolean isExistBarcodeNum(Vector<String> queryResult);
 }
