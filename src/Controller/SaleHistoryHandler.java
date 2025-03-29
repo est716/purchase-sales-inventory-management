@@ -13,6 +13,7 @@ public class SaleHistoryHandler implements ActionListener{
 
     public void insertData(String id, String num){
         this.saleHistoryData.insertData(id, num);
+        this.saleHistoryChartPanel.updateUI();
     }
 
     public void notification(){
@@ -32,6 +33,7 @@ public class SaleHistoryHandler implements ActionListener{
         if (e.getSource() == this.saleHistoryChartPanel.getDropButton()) {
             this.saleHistoryData.dropTable();
         }    
+        this.saleHistoryChartPanel.updateUI();
     }
 
 }

@@ -139,7 +139,12 @@ public class ShipmentPanel extends ViewPanel {
     }
 
     public void updateUI(){
-        revalidate();
-        repaint();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                revalidate();
+                repaint();
+            }
+        });
     }
 }

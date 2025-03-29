@@ -28,6 +28,11 @@ public class RestorkHandler extends Handler {
     @Override
     public void keyPressed(KeyEvent e) {
         // determine key is enter, and panel and data is not null
+        if (!isDigitOrEnter(e)){
+            JOptionPane.showMessageDialog(restorkPanel, "請使用數字", "警告", JOptionPane.ERROR_MESSAGE);
+            this.restorkPanel.getRestorkInput().setText("");
+            return;
+        }
         if (isEnterAndNotNull(e)) {
             String barcode = this.restorkPanel.getRestorkInputText();
             if (!barcode.equals("")) {
@@ -97,11 +102,6 @@ public class RestorkHandler extends Handler {
     @Override
     public Vector<String> getColumnName() {
         return null;
-    }
-
-    @Override
-    protected void isNonNumberAndClearTextView(char c) {
-        throw new UnsupportedOperationException("Unimplemented method 'isNonNumberAndClearTextView'");
     }
 
     @Override

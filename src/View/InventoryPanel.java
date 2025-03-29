@@ -4,13 +4,13 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.Handler;
 
 import java.awt.BorderLayout;
 
- 
 public class InventoryPanel extends ViewPanel {
 
     private JScrollPane inventoryJSP;
@@ -27,7 +27,7 @@ public class InventoryPanel extends ViewPanel {
         this.inventoryTable = new JTable();
         this.inventoryTable.setFont(font);
         this.inventoryTable.getTableHeader().setFont(font);
-        this.inventoryTable.setRowHeight(font.getSize()+5);
+        this.inventoryTable.setRowHeight(font.getSize() + 5);
         this.inventoryJSP = new JScrollPane(this.inventoryTable);
         this.deleteButton = new JButton("delete table");
         this.add(this.inventoryJSP, BorderLayout.CENTER);
@@ -35,7 +35,7 @@ public class InventoryPanel extends ViewPanel {
         this.add(this.deleteButton, BorderLayout.EAST);
     }
 
-    public void setTableModel(DefaultTableModel defaultTableModel){
+    public void setTableModel(DefaultTableModel defaultTableModel) {
         this.inventoryTable.setModel(defaultTableModel);
         this.inventoryTable.updateUI();
     }
@@ -43,12 +43,12 @@ public class InventoryPanel extends ViewPanel {
     public JTable getInventoryTable() {
         return inventoryTable;
     }
-    
+
     public JTextField getInventorySearchInput() {
         return inventorySearchInput;
     }
 
-    public void addListener(Handler handler){
+    public void addListener(Handler handler) {
         this.inventorySearchInput.addKeyListener(handler);
         this.deleteButton.addActionListener(handler);
     }
@@ -57,8 +57,13 @@ public class InventoryPanel extends ViewPanel {
         return deleteButton;
     }
 
-    public void updateUI(){
-        revalidate();
-        repaint();
+    public void updateUI() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                revalidate();
+                repaint();
+            }
+        });
     }
 }

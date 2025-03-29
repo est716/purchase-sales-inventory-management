@@ -40,6 +40,7 @@ public class SaleHistoryData {
 
     public void dropTable(){
         this.saleHistoryDB.dropTable();
+        this.dataset.clear();
     }
 
     public DefaultCategoryDataset getDataSet() {

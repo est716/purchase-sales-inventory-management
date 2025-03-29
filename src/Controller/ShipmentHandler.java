@@ -30,6 +30,11 @@ public class ShipmentHandler extends Handler {
     @Override
     public void keyPressed(KeyEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null) {
+            if (!isDigitOrEnter(e) && e.getKeyCode() != KeyEvent.VK_DECIMAL){
+                JOptionPane.showMessageDialog(shipmentPanel, "請使用數字", "警告", JOptionPane.ERROR_MESSAGE);
+                this.shipmentPanel.getShipmentInput().setText("");
+                return;
+            }
             barcodeAction(e);
             changeModelState(e);
             this.shipmentPanel.updateUI();
@@ -48,12 +53,12 @@ public class ShipmentHandler extends Handler {
             // 將特定商品的現有庫存轉成Int
             if (isSuccess)
                 inventoryCount = Integer.parseInt(InventoryData.getInstance().queryOnceData(barcodeString).get(3));
-            
-                // 將現在所輸入之商品的數量取回
+
+            // 將現在所輸入之商品的數量取回
             Vector<String> row = null;
             if (isSuccess)
                 row = this.shipmentData.getOnceData(barcodeString);
-            
+
             if (row != null && !row.isEmpty())
                 nowBarcodeProductCount = Integer.parseInt(row.get(3));
 
@@ -104,7 +109,7 @@ public class ShipmentHandler extends Handler {
                     String num = (String) dfm.getValueAt(i, 3);
                     // triggerEvent
                     InventoryData.getInstance().updateNewData(id, num);
-                    this.saleHistoryHandler.insertData(id, num);  
+                    this.saleHistoryHandler.insertData(id, num);
                 }
 
                 shipmentData.clearData();
@@ -165,7 +170,7 @@ public class ShipmentHandler extends Handler {
         throw new UnsupportedOperationException("Unimplemented method 'getColumnName'");
     }
 
-    public void bindingToSaleHistory(SaleHistoryHandler saleHistoryHandler){
+    public void bindingToSaleHistory(SaleHistoryHandler saleHistoryHandler) {
         this.saleHistoryHandler = saleHistoryHandler;
     }
 

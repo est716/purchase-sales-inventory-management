@@ -6,6 +6,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -21,12 +22,13 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import Controller.Handler;
 import Controller.SaleHistoryHandler;
 
-public class SaleHistoryChartPanel extends JPanel{
+public class SaleHistoryChartPanel extends JPanel {
     private final Font font = new Font("標楷體", Font.PLAIN, 35);
     private ChartPanel chartPanel;
     private JFreeChart barChart;
     private JButton dropButton;
     private DefaultCategoryDataset dataset;
+
     public SaleHistoryChartPanel() {
         // initialize layout
         this.setLayout(new BorderLayout());
@@ -41,8 +43,7 @@ public class SaleHistoryChartPanel extends JPanel{
                 PlotOrientation.VERTICAL,
                 true,
                 false,
-                false
-        );
+                false);
 
         setBarChartStyle();
 
@@ -54,7 +55,7 @@ public class SaleHistoryChartPanel extends JPanel{
         this.add(this.dropButton, BorderLayout.SOUTH);
     }
 
-    private void setBarChartStyle(){
+    private void setBarChartStyle() {
         this.barChart.getTitle().setFont(font); // 設定標題大小
         this.barChart.getLegend().setItemFont(font.deriveFont(20f)); // 設定Item大小
         this.barChart.getCategoryPlot().getDomainAxis().setLabelFont(font); // 設定X軸名稱大小
@@ -64,30 +65,36 @@ public class SaleHistoryChartPanel extends JPanel{
         this.barChart.getCategoryPlot().getRangeAxis().setLabelAngle(Math.PI / 2); // y axis label rotate 90 degree
         this.barChart.getCategoryPlot().getRenderer().setSeriesPaint(0, Color.decode("#64b5f6")); // set barChart Color
         this.barChart.getCategoryPlot().getRenderer().setBaseItemLabelsVisible(true); // 設定長條圖數字顯示
-        this.barChart.getCategoryPlot().getRenderer().setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator()); // 設定長條圖數字顯示樣式
+        this.barChart.getCategoryPlot().getRenderer()
+                .setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator()); // 設定長條圖數字顯示樣式
         this.barChart.setBackgroundPaint(Color.WHITE); // set chart background
         this.barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE); // set chart background
     }
 
-    public void setDataSet(DefaultCategoryDataset dataset){
+    public void setDataSet(DefaultCategoryDataset dataset) {
         this.dataset = dataset;
         this.barChart.getCategoryPlot().setDataset(this.dataset);
     }
 
-    public void updateUI(){
-        // this.barChart.fireChartChanged();
-        revalidate();
-        repaint();
+    public void updateUI() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                revalidate();
+                repaint();
+            }
+        });
     }
 
-    public JFreeChart getbarChart(){
+    public JFreeChart getbarChart() {
         return this.barChart;
     }
 
     public JButton getDropButton() {
         return dropButton;
     }
-    
+
     public void addListener(SaleHistoryHandler saleHistoryHandler) {
         this.dropButton.addActionListener(saleHistoryHandler);
     }
