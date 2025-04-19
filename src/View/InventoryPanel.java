@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import Controller.Handler;
 
@@ -17,6 +18,7 @@ public class InventoryPanel extends ViewPanel {
     private JTable inventoryTable;
     private JTextField inventorySearchInput;
     private JButton deleteButton;
+    private TableRowSorter sorter;
 
     public InventoryPanel() {
 
@@ -27,7 +29,10 @@ public class InventoryPanel extends ViewPanel {
         this.inventoryTable = new JTable();
         this.inventoryTable.setFont(font);
         this.inventoryTable.getTableHeader().setFont(font);
+        this.inventoryTable.getTableHeader().setReorderingAllowed(false);
         this.inventoryTable.setRowHeight(font.getSize() + 5);
+        this.sorter = new TableRowSorter<>();
+        this.inventoryTable.setRowSorter(this.sorter);
         this.inventoryJSP = new JScrollPane(this.inventoryTable);
         this.deleteButton = new JButton("delete table");
         this.add(this.inventoryJSP, BorderLayout.CENTER);
@@ -37,6 +42,7 @@ public class InventoryPanel extends ViewPanel {
 
     public void setTableModel(DefaultTableModel defaultTableModel) {
         this.inventoryTable.setModel(defaultTableModel);
+        this.sorter.setModel(defaultTableModel);
         this.inventoryTable.updateUI();
     }
 

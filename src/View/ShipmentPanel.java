@@ -46,6 +46,7 @@ public class ShipmentPanel extends ViewPanel {
         this.shipmentTable.setFont(font);
         this.shipmentTable.getTableHeader().setFont(font);
         this.shipmentTable.setRowHeight(font.getSize()+5);
+        this.shipmentTable.getTableHeader().setReorderingAllowed(false);
 
         this.shipmentJSP = new JScrollPane(this.shipmentTable);
 

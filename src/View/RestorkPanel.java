@@ -45,6 +45,7 @@ public class RestorkPanel extends ViewPanel {
         this.restorkTable.setFont(font);
         this.restorkTable.getTableHeader().setFont(font);
         this.restorkTable.setRowHeight(font.getSize() + 5);
+        this.restorkTable.getTableHeader().setReorderingAllowed(false);
         this.restorkJSP = new JScrollPane(this.restorkTable);
 
         // component configure
