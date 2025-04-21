@@ -96,12 +96,7 @@ public class ShipmentHandler extends Handler {
             if (this.shipmentPanel.getShipmentInput().getText().equals("")) {
                 JOptionPane.showMessageDialog(shipmentPanel, "請輸入收取金額", "警告", JOptionPane.ERROR_MESSAGE);
             } else {
-                // 計算找零
-                int sum = Integer.valueOf(this.shipmentData.getTotalPrice());
-                int chargeMoney = Integer.valueOf(this.shipmentPanel.getShipmentInput().getText());
-                int changeMoney = chargeMoney - sum;
-                this.shipmentPanel.setChargeMoneyLabelText(String.valueOf(chargeMoney));
-                this.shipmentPanel.setChangeMoneyLabelText(String.valueOf(changeMoney));
+                countingCash();
 
                 DefaultTableModel dfm = shipmentData.getData();
                 for (int i = 0; i < dfm.getRowCount(); i++) {
@@ -121,6 +116,7 @@ public class ShipmentHandler extends Handler {
             }
 
         }
+        removeTableRows(e);
     }
 
     @Override
@@ -172,6 +168,31 @@ public class ShipmentHandler extends Handler {
 
     public void bindingToSaleHistory(SaleHistoryHandler saleHistoryHandler) {
         this.saleHistoryHandler = saleHistoryHandler;
+    }
+
+    private void removeTableRows(ActionEvent e){
+        if (this.shipmentData != null && this.shipmentPanel != null
+                && this.shipmentPanel.getDeleteRowButton() == e.getSource()){
+            DefaultTableModel d = this.shipmentData.getData();
+            int size = d.getRowCount();
+            for(int i = size - 1; i >= 0; i--){
+                Boolean isSelected = (Boolean) d.getValueAt(i, 4);
+                if (isSelected != null && isSelected == true) {
+                    d.removeRow(i);
+                }
+            }
+            shipmentPanel.setShipmentLabelCountingSum(shipmentData.getTotalPrice());
+        }
+    }
+
+    private void countingCash(){
+        // 計算找零
+        int sum = Integer.valueOf(this.shipmentData.getTotalPrice());
+        int chargeMoney = Integer.valueOf(this.shipmentPanel.getShipmentInput().getText());
+        int changeMoney = chargeMoney - sum;
+        this.shipmentPanel.setChargeMoneyLabelText(String.valueOf(chargeMoney));
+        this.shipmentPanel.setChangeMoneyLabelText(String.valueOf(changeMoney));
+        this.shipmentPanel.updateUI();
     }
 
 }

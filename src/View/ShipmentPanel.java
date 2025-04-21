@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import Controller.Handler;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -25,11 +27,13 @@ public class ShipmentPanel extends ViewPanel {
     private JTextField shipmentInput;
 
     private JButton shipmentButton;
+    private JButton deleteRowButton;
 
     private JLabel shipmentLabelCountingSum;
     private JLabel chargeMoneyLabel;
     private JLabel changeMoneyLabel;
 
+    private JPanel shipmentNorthPanel;
     private JPanel shipmentSouthPanel;
     private JPanel labelPanel;
 
@@ -74,6 +78,8 @@ public class ShipmentPanel extends ViewPanel {
         this.shipmentButton.setFont(font);
         this.shipmentButton.setEnabled(false);
 
+        createNorthPanel();
+
         // set shipment South Panel layout and its componet position
         this.shipmentSouthPanel.setLayout(new GridBagLayout());
         GridBagConstraints shipmentInputConfig = new GridBagConstraints(6, 0, 5, 1, 10, 1,
@@ -92,6 +98,7 @@ public class ShipmentPanel extends ViewPanel {
 
         this.add(this.shipmentJSP, BorderLayout.CENTER);
         this.add(this.shipmentSouthPanel, BorderLayout.SOUTH);
+        this.add(this.shipmentNorthPanel, BorderLayout.NORTH);
 
     }
 
@@ -101,6 +108,10 @@ public class ShipmentPanel extends ViewPanel {
 
     public JButton getShipmentButton() {
         return shipmentButton;
+    }
+
+    public JButton getDeleteRowButton() {
+        return deleteRowButton;
     }
 
     public JTable getShipmentTable() {
@@ -120,6 +131,7 @@ public class ShipmentPanel extends ViewPanel {
         this.shipmentInput.addKeyListener(handler);
         this.shipmentButton.addActionListener(handler);
         this.shipmentTable.addMouseListener(handler);
+        this.deleteRowButton.addActionListener(handler);
     }
 
     public void setChargeMoneyLabelText(String text) {
@@ -148,4 +160,21 @@ public class ShipmentPanel extends ViewPanel {
             }
         });
     }
+
+    private void createNorthPanel(){
+        this.shipmentNorthPanel = new JPanel();
+        this.shipmentNorthPanel.setLayout(new BoxLayout(this.shipmentNorthPanel, BoxLayout.X_AXIS));
+        
+        JPanel paddingPanel = new JPanel();
+        paddingPanel.setOpaque(false);
+        paddingPanel.setPreferredSize(new Dimension((int)(1300 * 0.2), 50));
+        
+        this.deleteRowButton = new JButton("確認刪除");
+        this.deleteRowButton.setFont(font);
+        
+        this.shipmentNorthPanel.add(paddingPanel);
+        this.shipmentNorthPanel.add(this.deleteRowButton);
+    
+    }
+
 }

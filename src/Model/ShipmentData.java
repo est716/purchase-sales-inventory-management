@@ -9,12 +9,31 @@ public class ShipmentData extends Data {
     private InventoryData inventoryData = InventoryData.getInstance();
 
     public ShipmentData() {
-        this.data = new DefaultTableModel();
+        this.data = constructTableModel();
+        this.columnName.add("刪除");
         this.data.setColumnIdentifiers(this.columnName);
     }
 
     public DefaultTableModel getData() {
         return data;
+    }
+
+    private DefaultTableModel constructTableModel(){
+        return new DefaultTableModel(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 4;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 4) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
     }
 
     /**
