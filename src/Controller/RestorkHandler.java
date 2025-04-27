@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import Model.Data;
 import Model.InventoryData;
@@ -48,6 +49,24 @@ public class RestorkHandler extends Handler {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        triggerIntoButton(e);
+        triggerDeleteRowButton(e);
+    }
+
+    private void triggerDeleteRowButton(ActionEvent e) {
+        if (isNotNull() && e.getSource() == this.restorkPanel.getDeleteRowButton()) {
+            DefaultTableModel d = this.restorkData.getData();
+            int size = d.getRowCount();
+            for (int i = size - 1; i >= 0; i--) {
+                Boolean isSelected = (Boolean) d.getValueAt(i, 4);
+                if (isSelected != null && isSelected == true) {
+                    d.removeRow(i);
+                }
+            }
+        }
+    }
+
+    private void triggerIntoButton(ActionEvent e) {
         // isNotNull funtion that determine variable of panel and data is not null
         if (isNotNull() && e.getSource() == this.restorkPanel.getIntoButton()) {
             Vector<Vector<String>> list = this.restorkPanel.getRestorkList();
@@ -60,7 +79,6 @@ public class RestorkHandler extends Handler {
                 JOptionPane.showMessageDialog(this.restorkPanel, "名稱或價格為空", "警告", JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 
     @Override

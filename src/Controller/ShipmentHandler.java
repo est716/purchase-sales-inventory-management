@@ -30,7 +30,7 @@ public class ShipmentHandler extends Handler {
     @Override
     public void keyPressed(KeyEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null) {
-            if (!isDigitOrEnter(e) && e.getKeyCode() != KeyEvent.VK_DECIMAL){
+            if (!isDigitOrEnter(e) && e.getKeyCode() != KeyEvent.VK_DECIMAL) {
                 JOptionPane.showMessageDialog(shipmentPanel, "請使用數字", "警告", JOptionPane.ERROR_MESSAGE);
                 this.shipmentPanel.getShipmentInput().setText("");
                 return;
@@ -170,12 +170,12 @@ public class ShipmentHandler extends Handler {
         this.saleHistoryHandler = saleHistoryHandler;
     }
 
-    private void removeTableRows(ActionEvent e){
+    private void removeTableRows(ActionEvent e) {
         if (this.shipmentData != null && this.shipmentPanel != null
-                && this.shipmentPanel.getDeleteRowButton() == e.getSource()){
+                && this.shipmentPanel.getDeleteRowButton() == e.getSource()) {
             DefaultTableModel d = this.shipmentData.getData();
             int size = d.getRowCount();
-            for(int i = size - 1; i >= 0; i--){
+            for (int i = size - 1; i >= 0; i--) {
                 Boolean isSelected = (Boolean) d.getValueAt(i, 4);
                 if (isSelected != null && isSelected == true) {
                     d.removeRow(i);
@@ -185,7 +185,7 @@ public class ShipmentHandler extends Handler {
         }
     }
 
-    private void countingCash(){
+    private void countingCash() {
         // 計算找零
         int sum = Integer.valueOf(this.shipmentData.getTotalPrice());
         int chargeMoney = Integer.valueOf(this.shipmentPanel.getShipmentInput().getText());

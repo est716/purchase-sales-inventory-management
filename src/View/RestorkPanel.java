@@ -1,5 +1,6 @@
 package View;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -11,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.Handler;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,10 +20,13 @@ import java.util.Vector;
 
 public class RestorkPanel extends ViewPanel {
     private JPanel restorkSouthPanel;
+    private JPanel restorkNorthPanel;
     private JButton into;
     private JTextField restorkInput;
     private JTable restorkTable;
     private JScrollPane restorkJSP;
+    private JButton deleteRowButton;
+    
 
     public RestorkPanel() {
         // initialize layout
@@ -33,12 +38,7 @@ public class RestorkPanel extends ViewPanel {
         this.restorkInput = new JTextField();
         this.restorkInput.setFont(font);
         this.into.setFont(font);
-        this.restorkTable = new JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column != 0;
-            }
-        };
+        this.restorkTable = new JTable();
 
         
 
@@ -47,6 +47,8 @@ public class RestorkPanel extends ViewPanel {
         this.restorkTable.setRowHeight(font.getSize() + 5);
         this.restorkTable.getTableHeader().setReorderingAllowed(false);
         this.restorkJSP = new JScrollPane(this.restorkTable);
+
+        createNorthPanel();
 
         // component configure
         this.restorkSouthPanel.setLayout(new GridBagLayout());
@@ -59,7 +61,7 @@ public class RestorkPanel extends ViewPanel {
         this.restorkSouthPanel.add(this.into, restorkIntoConfig);
         this.add(this.restorkJSP, BorderLayout.CENTER);
         this.add(this.restorkSouthPanel, BorderLayout.SOUTH);
-
+        this.add(this.restorkNorthPanel, BorderLayout.NORTH);
     }
 
     public void setTableModel(DefaultTableModel defaultTableModel) {
@@ -93,10 +95,31 @@ public class RestorkPanel extends ViewPanel {
     public void addListener(Handler handler) {
         this.restorkInput.addKeyListener(handler);
         this.into.addActionListener(handler);
+        this.deleteRowButton.addActionListener(handler);
     }
 
     public JTextField getRestorkInput() {
         return restorkInput;
+    }
+
+    public JButton getDeleteRowButton() {
+        return deleteRowButton;
+    }
+
+    private void createNorthPanel(){
+        this.restorkNorthPanel = new JPanel();
+        this.restorkNorthPanel.setLayout(new BoxLayout(this.restorkNorthPanel, BoxLayout.X_AXIS));
+        
+        JPanel paddingPanel = new JPanel();
+        paddingPanel.setOpaque(false);
+        paddingPanel.setPreferredSize(new Dimension((int)(1300 * 0.2), 50));
+        
+        this.deleteRowButton = new JButton("確認刪除");
+        this.deleteRowButton.setFont(font);
+        
+        this.restorkNorthPanel.add(paddingPanel);
+        this.restorkNorthPanel.add(this.deleteRowButton);
+
     }
 
     public void updateUI() {
