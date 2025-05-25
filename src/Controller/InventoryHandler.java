@@ -2,35 +2,27 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.Vector;
+
+import javax.print.Doc;
+import javax.swing.event.DocumentEvent;
 
 import Model.Data;
 import Model.InventoryData;
 import View.InventoryPanel;
 import View.ViewPanel;
 
-public class InventoryHandler extends Handler {
+public class InventoryHandler extends Handler{
     private InventoryData inventoryData;
     private InventoryPanel inventoryPanel;
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
-    }
+    public void keyPressed(KeyEvent e) {}
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
-    }
+    public void keyReleased(KeyEvent e) {}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -38,36 +30,6 @@ public class InventoryHandler extends Handler {
             inventoryData.deleteTable();
             inventoryPanel.updateUI();
         }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
     @Override
@@ -80,17 +42,24 @@ public class InventoryHandler extends Handler {
         this.inventoryPanel = (InventoryPanel) viewPanel;
     }
 
+    public void triggerQueryDataAndUpdateUI(DocumentEvent e) {
+        if (e.getDocument() == this.inventoryPanel.getInventorySearchInput().getDocument()) {
+            String searchText = this.inventoryPanel.getInventorySearchInput().getText();
+            this.inventoryData.queryData(searchText);
+            this.inventoryPanel.updateUI();
+        }
+    } 
+
     @Override
-    public Vector<Vector<String>> getData() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getData'");
+    public void insertUpdate(DocumentEvent e) {
+        triggerQueryDataAndUpdateUI(e);
     }
 
     @Override
-    public Vector<String> getColumnName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getColumnName'");
+    public void removeUpdate(DocumentEvent e) {
+        triggerQueryDataAndUpdateUI(e);
     }
 
-
+    @Override
+    public void changedUpdate(DocumentEvent e) {}
 }

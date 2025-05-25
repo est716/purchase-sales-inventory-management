@@ -129,7 +129,6 @@ public class ShipmentPanel extends ViewPanel {
     public void addListener(Handler handler) {
         this.shipmentInput.addKeyListener(handler);
         this.shipmentButton.addActionListener(handler);
-        this.shipmentTable.addMouseListener(handler);
         this.deleteRowButton.addActionListener(handler);
     }
 

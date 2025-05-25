@@ -2,10 +2,10 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Data;
@@ -120,26 +120,6 @@ public class ShipmentHandler extends Handler {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
     public void bindingToModel(Data dataModel) {
         if (dataModel instanceof ShipmentData) {
             this.shipmentData = (ShipmentData) dataModel;
@@ -152,18 +132,6 @@ public class ShipmentHandler extends Handler {
             this.shipmentPanel = (ShipmentPanel) viewPanel;
         }
 
-    }
-
-    @Override
-    public Vector<Vector<String>> getData() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getData'");
-    }
-
-    @Override
-    public Vector<String> getColumnName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getColumnName'");
     }
 
     public void bindingToSaleHistory(SaleHistoryHandler saleHistoryHandler) {
@@ -193,6 +161,24 @@ public class ShipmentHandler extends Handler {
         this.shipmentPanel.setChargeMoneyLabelText(String.valueOf(chargeMoney));
         this.shipmentPanel.setChangeMoneyLabelText(String.valueOf(changeMoney));
         this.shipmentPanel.updateUI();
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insertUpdate'");
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeUpdate'");
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'changedUpdate'");
     }
 
 }

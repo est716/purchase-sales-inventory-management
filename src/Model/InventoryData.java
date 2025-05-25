@@ -26,6 +26,22 @@ public class InventoryData extends Data {
         return instance.data;
     }
 
+    // this method is used to query data from the database
+    // and update the data table model
+    public void queryData(String searchText) {
+        // if searchText is empty, return all data
+        if (searchText.isEmpty()) {
+            Vector<Vector<String>> allData = inventoryDB.queryAllData();
+            instance.data.setDataVector(allData, instance.columnName);
+        }else {
+            // else query data by searchText
+            Vector<Vector<String>> queryData = inventoryDB.fuzzySearch(searchText);
+            if (!queryData.isEmpty()) {
+                instance.data.setDataVector(queryData, instance.columnName);
+            }
+        }
+    }
+        
     // I used setDataVector update data table model
     private void updateDataTableModel() {
         instance.data.setDataVector(inventoryDB.queryAllData(), instance.columnName);

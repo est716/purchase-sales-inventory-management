@@ -2,10 +2,10 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Data;
@@ -82,40 +82,6 @@ public class RestorkHandler extends Handler {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public Vector<Vector<String>> getData() {
-        return this.restorkPanel.getRestorkList();
-    }
-
-    @Override
-    public Vector<String> getColumnName() {
-        return null;
-    }
-
-    @Override
     public void bindingToModel(Data dataModel) {
         this.restorkData = (RestorkData) dataModel;
     }
@@ -140,6 +106,24 @@ public class RestorkHandler extends Handler {
             }
         }
         return true;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insertUpdate'");
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeUpdate'");
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'changedUpdate'");
     }
 
 }

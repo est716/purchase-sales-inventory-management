@@ -138,6 +138,25 @@ public class InventoryDB {
         return queryDataList;
     }
 
+    public Vector<Vector<String>> fuzzySearch(String searchString){
+        String querySyn = "SELECT id, name, price, num FROM INVENTORY WHERE id LIKE '%" + searchString + "%'";
+        Vector<Vector<String>> queryDataList = new Vector<Vector<String>>();
+        try {
+            ResultSet rs = this.statement.executeQuery(querySyn);
+            while (rs.next()) {
+                Vector<String> data = new Vector<String>();
+                data.add(rs.getString("id"));
+                data.add(rs.getString("name"));
+                data.add(rs.getString("price"));
+                data.add(rs.getString("num"));
+                queryDataList.add(data);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return queryDataList;
+    }
+
     public void deleteTable() {
         String deleteStatement = "DELETE FROM INVENTORY";
         try {

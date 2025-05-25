@@ -18,7 +18,7 @@ public class InventoryPanel extends ViewPanel {
     private JTable inventoryTable;
     private JTextField inventorySearchInput;
     private JButton deleteButton;
-    private TableRowSorter sorter;
+    private TableRowSorter<DefaultTableModel> sorter;
 
     public InventoryPanel() {
 
@@ -57,6 +57,7 @@ public class InventoryPanel extends ViewPanel {
     public void addListener(Handler handler) {
         this.inventorySearchInput.addKeyListener(handler);
         this.deleteButton.addActionListener(handler);
+        this.inventorySearchInput.getDocument().addDocumentListener(handler);
     }
 
     public JButton getDeleteButton() {

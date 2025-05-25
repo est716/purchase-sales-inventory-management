@@ -1,18 +1,18 @@
 package Controller;
 
 import java.awt.event.KeyListener;
+
+import javax.swing.event.DocumentListener;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseListener;
-
-import java.util.Vector;
 
 import Model.Data;
 
 import View.ViewPanel;
 
 // can test used KeyAdapter, MouseAdapter
-public abstract class Handler implements KeyListener, ActionListener, MouseListener {
+public abstract class Handler implements KeyListener, ActionListener, DocumentListener{
 
     public Handler() {
 
@@ -21,10 +21,6 @@ public abstract class Handler implements KeyListener, ActionListener, MouseListe
     public abstract void bindingToModel(Data dataModel);
 
     public abstract void bindingToView(ViewPanel viewPanel);
-
-    public abstract Vector<Vector<String>> getData();
-
-    public abstract Vector<String> getColumnName();
 
     protected boolean isDigitOrEnter(KeyEvent e) {
         int code = e.getKeyCode();
