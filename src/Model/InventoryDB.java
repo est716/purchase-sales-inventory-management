@@ -139,7 +139,12 @@ public class InventoryDB {
     }
 
     public Vector<Vector<String>> fuzzySearch(String searchString){
-        String querySyn = "SELECT id, name, price, num FROM INVENTORY WHERE id LIKE '%" + searchString + "%'";
+        String querySyn;
+        if (searchString.matches("\\d+")) {
+            querySyn = "SELECT id, name, price, num FROM INVENTORY WHERE id LIKE '%" + searchString + "%'";
+        }else {
+            querySyn = "SELECT id, name, price, num FROM INVENTORY WHERE name LIKE '%" + searchString + "%'";
+        }
         Vector<Vector<String>> queryDataList = new Vector<Vector<String>>();
         try {
             ResultSet rs = this.statement.executeQuery(querySyn);

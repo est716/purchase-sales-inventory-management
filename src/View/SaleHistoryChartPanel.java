@@ -13,15 +13,15 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 import Controller.SaleHistoryHandler;
+import Model.SaleHistoryCategoryDataset;
 
 public class SaleHistoryChartPanel extends JPanel {
     private final Font font = new Font("標楷體", Font.PLAIN, 35);
     private ChartPanel chartPanel;
     private JFreeChart barChart;
     private JButton dropButton;
-    private DefaultCategoryDataset dataset;
+    private SaleHistoryCategoryDataset dataset;
 
     public SaleHistoryChartPanel() {
         // initialize layout
@@ -65,7 +65,7 @@ public class SaleHistoryChartPanel extends JPanel {
         this.barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE); // set chart background
     }
 
-    public void setDataSet(DefaultCategoryDataset dataset) {
+    public void setDataSet(SaleHistoryCategoryDataset dataset) {
         this.dataset = dataset;
         this.barChart.getCategoryPlot().setDataset(this.dataset);
     }
@@ -75,6 +75,9 @@ public class SaleHistoryChartPanel extends JPanel {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
+                if (dataset != null) {
+                    dataset.refreshDataSet(); // 更新資料集
+                }
                 revalidate();
                 repaint();
             }

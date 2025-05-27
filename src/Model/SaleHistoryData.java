@@ -2,16 +2,14 @@ package Model;
 
 import java.util.Vector;
 
-import org.jfree.data.category.DefaultCategoryDataset;
-
 public class SaleHistoryData {
     private static SaleHistoryData instance;
-    DefaultCategoryDataset dataset;
+    SaleHistoryCategoryDataset dataset;
     private SaleHistoryDB saleHistoryDB;
 
     private SaleHistoryData() {
         saleHistoryDB = SaleHistoryDB.getInstance();
-        this.dataset = new DefaultCategoryDataset();
+        this.dataset = new SaleHistoryCategoryDataset();
         queryData();
     }
 
@@ -43,7 +41,7 @@ public class SaleHistoryData {
         this.dataset.clear();
     }
 
-    public DefaultCategoryDataset getDataSet() {
+    public SaleHistoryCategoryDataset getDataSet() {
         return this.dataset;
     }
 

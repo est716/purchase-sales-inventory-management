@@ -26,6 +26,7 @@ public class InventoryPanel extends ViewPanel {
         this.setLayout(new BorderLayout());
 
         this.inventorySearchInput = new JTextField();
+        this.inventorySearchInput.setFont(font);
         this.inventoryTable = new JTable();
         this.inventoryTable.setFont(font);
         this.inventoryTable.getTableHeader().setFont(font);
