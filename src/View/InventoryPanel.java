@@ -38,7 +38,7 @@ public class InventoryPanel extends ViewPanel {
         this.deleteButton = new JButton("delete table");
         this.add(this.inventoryJSP, BorderLayout.CENTER);
         this.add(this.inventorySearchInput, BorderLayout.SOUTH);
-        this.add(this.deleteButton, BorderLayout.EAST);
+        // this.add(this.deleteButton, BorderLayout.EAST);
     }
 
     public void setTableModel(DefaultTableModel defaultTableModel) {

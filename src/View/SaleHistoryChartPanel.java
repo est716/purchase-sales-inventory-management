@@ -46,7 +46,7 @@ public class SaleHistoryChartPanel extends JPanel {
         this.dropButton = new JButton("Drop Table");
 
         this.add(this.chartPanel, BorderLayout.CENTER);
-        this.add(this.dropButton, BorderLayout.SOUTH);
+        // this.add(this.dropButton, BorderLayout.SOUTH);
     }
 
     private void setBarChartStyle() {
